@@ -8,7 +8,7 @@ This is a console-based Library Management System built using Core Java, JDBC, a
 - View list of registered members
 - Basic menu-driven console interface
 
-🛠 Technologies Used
+🛠 Technologies Used<br>
 Java (Core)	                   : Main application logic<br>
 JDBC (Java DB Connectivity)	   : Connect Java app to MySQL<br>
 MySQL	                         : Backend relational database<br>
