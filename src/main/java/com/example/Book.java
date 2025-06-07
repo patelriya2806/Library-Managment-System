@@ -23,8 +23,8 @@ public class Book {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1,bookName);
             ps.setString(2,author);
-//            int i = ps.executeUpdate();
-//            System.out.println("no of rows inserted = " + i);
+            int i = ps.executeUpdate();
+            System.out.println("no of rows inserted = " + i);
         } catch (SQLException e){
             System.out.println("error : "+e.getMessage());
             e.printStackTrace();
@@ -55,5 +55,4 @@ public class Book {
             e.printStackTrace();
         }
     }
-
 }
