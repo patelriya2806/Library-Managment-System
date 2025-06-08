@@ -40,6 +40,7 @@ public class main {
                         member.issueBook();
                         break;
                     case 4:
+                        member.searchIssuedBooks();
                         break;
                     case 5:
                         break;
