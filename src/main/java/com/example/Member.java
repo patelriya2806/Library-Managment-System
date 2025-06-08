@@ -37,13 +37,21 @@ public class Member {
             if(rs.next()) {
                 System.out.print("Enter the book name to issue : ");
                 String bookName = sc.nextLine();
-
-                PreparedStatement pstmt = conn.prepareStatement(query2);
-                ps.setString(1, name);
-                ps.setLong(2, contactNo);
-                pstmt.setString(3, bookName);
-                int row = pstmt.executeUpdate();
-                System.out.println("Book issued Successfully");
+                String query3 = "select * from books where bookName = ?";
+                PreparedStatement ps2 = conn.prepareStatement(query3);
+                ps2.setString(1,bookName);
+                ResultSet rs2 = ps2.executeQuery();
+                if (rs2.next()){
+                    PreparedStatement pstmt = conn.prepareStatement(query2);
+                    pstmt.setString(1, name);
+                    pstmt.setLong(2, contactNo);
+                    pstmt.setString(3, bookName);
+                    int row = pstmt.executeUpdate();
+                    System.out.println("Book issued Successfully");
+                }
+                else {
+                    System.out.println("Book may not available");
+                }
             }
             else {
                 System.out.println("user data not found , register yourself first");

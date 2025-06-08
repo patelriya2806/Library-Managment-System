@@ -11,8 +11,11 @@ public class main {
         try {
             conn = DBconnection.getConnection();
             System.out.println("connected to mySQL");
-
+            if(conn == null){
+                System.out.println("not connected to mysql");
+            }
             Book book = new Book(conn);
+            Member member = new Member(conn);
 
             System.out.println("   ===== library managment system =====   ");
             while (true) {
@@ -28,6 +31,13 @@ public class main {
                         book.searchBook();
                         break;
                     case 3:
+                        System.out.println("Are you a member of library : y/n");
+                        String ans = sc.next();
+                        if(ans.equalsIgnoreCase("n")){
+                            System.out.println("please , enroll yourself FIRST");
+                            break;
+                        }
+                        member.issueBook();
                         break;
                     case 4:
                         break;
