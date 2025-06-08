@@ -1,7 +1,9 @@
 package com.example;
 
 import com.mysql.cj.protocol.Resultset;
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
 
+import javax.xml.transform.Result;
 import java.sql.PreparedStatement;
 import java.util.Scanner;
 import java.sql.Connection;
@@ -57,6 +59,37 @@ public class Member {
                 System.out.println("user data not found , register yourself first");
             }
         } catch (SQLException e){
+            System.out.println("error : "+ e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void searchIssuedBooks(){
+        try {
+            String query1 = "select * from issueBook";
+            String query2 = "select * from issueBook where bookName = ?";
+
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query1);
+            while (rs.next()) {
+                System.out.println(rs.getString(1) + " " + rs.getLong(2) +  " " + rs.getString(3));
+            }
+            System.out.println("Do you want to search any specific book data ? (y/n)");
+            String ans = sc.next();
+            sc.nextLine();
+            if(ans.equalsIgnoreCase("y")){
+                System.out.print("Enter the book name : ");
+                String bookName = sc.nextLine();
+
+                PreparedStatement ps2 = conn.prepareStatement(query2);
+                ps2.setString(1,bookName);
+                ResultSet rs2 = ps2.executeQuery();
+                while (rs2.next()) {
+                    System.out.println(rs2.getString(1) + " " + rs2.getLong(2) +  " " + rs2.getString(3));
+                }
+            }
+        }
+        catch (SQLException e){
             System.out.println("error : "+ e.getMessage());
             e.printStackTrace();
         }
