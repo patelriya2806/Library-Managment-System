@@ -22,8 +22,11 @@ public class Member {
 
     public void issueBook(){
         try{
+            int quantity;
             String query1 = "select * from members where name = ? and contactNo = ?";
             String query2 = "insert into issueBook(name,contactNo,bookName) values(?,?,?)";
+            String query3 = "select * from books where bookName = ?";
+            String query4 = "update books set quantity = ? where bookName = ?";
 
             System.out.print("Enter your name : ");
             name = sc.nextLine();
@@ -39,16 +42,25 @@ public class Member {
             if(rs.next()) {
                 System.out.print("Enter the book name to issue : ");
                 String bookName = sc.nextLine();
-                String query3 = "select * from books where bookName = ?";
+                
                 PreparedStatement ps2 = conn.prepareStatement(query3);
                 ps2.setString(1,bookName);
                 ResultSet rs2 = ps2.executeQuery();
+
+
                 if (rs2.next()){
+                    quantity = rs2.getInt("quantity");
                     PreparedStatement pstmt = conn.prepareStatement(query2);
                     pstmt.setString(1, name);
                     pstmt.setLong(2, contactNo);
                     pstmt.setString(3, bookName);
                     int row = pstmt.executeUpdate();
+
+                    PreparedStatement pstmt2 = conn.prepareStatement(query4);
+                    quantity--;
+                    pstmt2.setInt(1, quantity);
+                    pstmt2.setString(2, bookName);
+                    pstmt2.executeUpdate();
                     System.out.println("Book issued Successfully");
                 }
                 else {
