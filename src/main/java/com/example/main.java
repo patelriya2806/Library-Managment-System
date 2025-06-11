@@ -43,8 +43,10 @@ public class main {
                         member.searchIssuedBooks();
                         break;
                     case 5:
+                        member.addMember();
                         break;
                     case 6:
+                        member.searchMember();
                         break;
                     case 7:
                         break;

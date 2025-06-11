@@ -107,5 +107,61 @@ public class Member {
         }
     }
 
+    public void addMember(){
+        try {
+            String query1 = "insert into members(name,contactNo) values( ?, ?)";
+
+            System.out.print("Enter your name : ");
+            String name = sc.nextLine();
+            System.out.print("Enter your contact number : ");
+            long contactNo = sc.nextLong();
+            sc.nextLine();
+
+            PreparedStatement ps1 = conn.prepareStatement(query1);
+            ps1.setString(1,name);
+            ps1.setLong(2,contactNo);
+            ps1.executeUpdate();
+
+            System.out.println("Member added successfully");
+        }
+        catch (SQLException e){
+            System.out.println("error : "+e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void searchMember(){
+        try{
+            String query1 = "select * from members";
+            String query2 = "select * from members where name = ?";
+
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query1);
+
+            while (rs.next()) {
+                System.out.println(rs.getInt(1) + " " + rs.getString(2) + " " + rs.getLong(3)) ;
+            }
+            System.out.println("Do you want to search any specific Member data ? (y/n)");
+            String choice =  sc.next();
+            sc.nextLine();
+            if(choice.equalsIgnoreCase("y")) {
+
+                System.out.println("Enter the name to search : ");
+                String name = sc.nextLine();
+
+                PreparedStatement ps = conn.prepareStatement(query2);
+                ps.setString(1, name);
+                ResultSet rs2 = ps.executeQuery();
+                while (rs2.next()) {
+                    System.out.println(rs2.getInt(1) + " " + rs2.getString(2) + " " + rs2.getLong(3));
+                }
+            }
+
+        } catch(SQLException e){
+            System.out.println("error : "+ e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 
 }
